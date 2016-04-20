@@ -1,0 +1,72 @@
+php artisan make:model personal_informations -m
+php artisan make:model requests -m
+php artisan make:model colonies -m
+php artisan make:model colony_scopes -m 
+php artisan make:model settlement_types -m
+php artisan make:model brigades -m
+php artisan make:model sectors -m
+php artisan make:model requests_priorities -m
+php artisan make:model requests_states -m
+php artisan make:model requests_types -m
+php artisan make:model problem_types -m
+php artisan make:model requests_rejections -m
+php artisan make:model citizens -m
+php artisan make:model supervisions -m
+php artisan make:model supervision_typology -m
+php artisan make:model typologies -m
+php artisan make:model supervisionables -m
+php artisan make:model users -m
+php artisan make:model activities -m
+php artisan make:model settings -m
+php artisan make:model roles -m
+php artisan make:model permissions -m
+php artisan make:model notifications -m
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+php artisan make:model Activity -m
+php artisan make:model Brigade -m
+php artisan make:model Citizen -m
+php artisan make:model Colony -m
+php artisan make:model ColonyScope -m
+php artisan make:model Notification -m
+php artisan make:model Permission -m
+php artisan make:model PersonalInformation -m
+php artisan make:model ProblemType -m
+php artisan make:model Request -m
+php artisan make:model RequestPriority -m
+php artisan make:model RequestRejection -m
+php artisan make:model RequestState -m
+php artisan make:model RequestType -m
+php artisan make:model Role -m
+php artisan make:model Sector -m
+php artisan make:model Setting -m
+php artisan make:model SettlementType -m
+php artisan make:model Supervisionable -m
+php artisan make:model Supervition -m
+php artisan make:model Typology -m
+
+
+php artisan make:controller UserController --resource
+php artisan make:controller ActivitiesController --resource
+php artisan make:controller BrigadesController --resource
+php artisan make:controller CitizensController --resource
+php artisan make:controller ColoniesController --resource
+php artisan make:controller ColonyScopesController --resource
+php artisan make:controller NotificationsController --resource
+php artisan make:controller PermissionsController --resource
+php artisan make:controller PersonalInformationsController --resource
+php artisan make:controller ProblemTypesController --resource
+php artisan make:controller RequestsController --resource
+php artisan make:controller RequestPrioritiesController --resource
+php artisan make:controller RequestRejectionsController --resource
+php artisan make:controller RequestStatesController --resource
+php artisan make:controller RequestTypesController --resource
+php artisan make:controller RolesController --resource
+php artisan make:controller SectorsController --resource
+php artisan make:controller SettingsController --resource
+php artisan make:controller SettlementTypesController --resource
+php artisan make:controller SupervicionablesController --resource
+php artisan make:controller SupervitionsController --resource
+php artisan make:controller TypologiesController --resource
+
+php artisan make:controller AdminController

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Formulario</title>
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- BEGIN CORE CSS -->
+    <link rel="stylesheet" href="../assets/admin1/css/admin1.css">
+    <link rel="stylesheet" href="../assets/globals/css/elements.css?v12">
+    <!-- END CORE CSS -->
+
+    <!-- BEGIN PLUGINS CSS -->
+    <link rel="stylesheet" href="../assets/globals/plugins/jasny-bootstrap/dist/css/jasny-bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/globals/plugins/components-summernote/dist/summernote.css">
+
+    <link rel="stylesheet" href="../assets/globals/css/plugins.css">
+    <!-- END PLUGINS CSS -->
+
+    <!-- BEGIN SHORTCUT AND TOUCH ICONS -->
+
+    <!-- END SHORTCUT AND TOUCH ICONS -->
+
+    <script src="../assets/globals/plugins/modernizr/modernizr.min.js"></script>
+    <link rel="stylesheet" href="../atcifront.css">
+    <style type="text/css">
+      .radioer{
+        text-align: left;
+      }
+      .switcher{
+        text-align: center;
+      }
+      p.switch{
+        display: inline;
+      }
+      small{
+        font-size: 13px;
+      }
+      .layout-device, .layout-tablet{
+        margin-top: 0;
+      }
+      #showHidePass{
+        opacity: 0;
+        padding:0;
+      }
+
+      .fileinput-filename{
+        overflow:hidden; /* Escondemos la parte sobrante */
+        white-space:nowrap; /* Indicamos que no realice salto de linea si no cabe en la anchura indicada */
+        text-overflow: ellipsis; /* Ponemos los dos puntos */
+      }
+      .centerFileInput {
+        display: inline;
+        margin-top: 10px;
+        text-align: left;
+      }
+      .fileinput.input-group {
+        display: inline;
+      }
+      .btnMargin{
+        margin-top:10px;
+      }
+      .optionnav{
+        font-size: 14px;
+      }
+
+      #map{
+        width: 100%;
+        height: 350px;
+      }
+
+      #map:after {
+        width: 22px;
+        height: 40px;
+        display: block;
+        content: ' ';
+        position: absolute;
+        top: 50%; left: 50%;
+        margin: -40px 0 0 -11px;
+        background: url('https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi_hdpi.png');
+        background-size: 22px 40px; /* Since I used the HiDPI marker version this compensates for the 2x size */
+    }
+
+    </style>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script src="http://www.google.com/jsapi?key=ABQIAAAAlJFc1lrstqhgTl3ZYo38bBQcfCcww1WgMTxEFsdaTsnOXOVOUhTplLhHcmgnaY0u87hQyd-n-kiOqQ"></script>
+
+    <script type="text/javascript">
+    var geocoder;
+    function initialize() {
+      // mapCenter bettween Parque 21 de Mayo and Catedral del Sagrario de la Inmaculada
+      var mapCenter = new google.maps.LatLng(18.893784, -96.934458);
+      var mapOptions = {
+        zoom: 17,
+        center: mapCenter,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      
+      map = new google.maps.Map(document.getElementById('map'), mapOptions);
+      geocoder = new google.maps.Geocoder;
+
+      var setLocation = function (latLng) {
+        map.setCenter(latLng);
+      };
+      
+      // Check for geolocation support  
+      if (navigator.geolocation) {
+        // Get current position
+        navigator.geolocation.getCurrentPosition(function (position) {
+            // Geolocation Success!
+            setLocation(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+          }, 
+          function () {
+            // Gelocation fallback: Defaults mapCenter
+            setLocation(mapCenter);
+          }
+        );
+      }
+      else {
+        // No geolocation fallback: Defaults mapCenter
+        setLocation(mapCenter);
+      }
+
+      // log initial center
+      logCenter();
+      // log when center changed
+      google.maps.event.addListener(map, "center_changed", function() {
+         logCenter();
+      });
+    }
+
+    function logCenter() {
+      $('#lat').val(map.getCenter().lat());
+      $('#lng').val(map.getCenter().lng());
+    }
+
+    function geocodeLatLng() {
+      geocoder.geocode({'location': map.getCenter()}, function(results, status) {
+        if (status === google.maps.GeocoderStatus.OK) {
+          if (results[1]) {
+            //numero
+            document.getElementById("number").value = results[0].address_components[0].long_name;
+            //calle, avenida
+            document.getElementById("route").value = results[0].address_components[1].long_name;
+            //colonia
+            document.getElementById("sublocality").value = results[0].address_components[2].long_name;
+          } else {
+            window.alert('No se encontraron resultados.');
+          }
+        } else {
+          window.alert('Geocoder failed due to: ' + status);   
+        }
+      });
+    }
+  </script>
+  </head>
+  <body>
+  <nav class="navbar navbar-default container-fluid">
+    <div class="container">
+      <ul class="nav navbar-nav navbar-left">
+        <li><a href="#" class="optionnav"><i class="fa fa-home"></i> Ver video</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" class="optionnav"><i class="fa fa-home"></i> Registrarme</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="panel bs-wizard bs-wizard-steps-with-progress">
+      <div class="panel-heading">
+        <div class="panel-title text-center shadow" style="font-size: 20px; color: #125FB5;"></div>
+        <div class="steps-centered" id="mover">
+          <div class="progress progress-striped">
+            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
+            </div>
+          </div><!--.progress-->
+          <ul class="wizard-steps">
+            <li class="step" data-title="¿COMO PODEMOS AYUDARLE?">
+              <a href="#form3_tab1" data-toggle="tab" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+            </li>
+            <li class="step" data-title="¿DONDE SE LOCALIZA?">
+              <a href="#form3_tab2" data-toggle="tab" class="btn btn-white"><i class="fa fa-map-marker"></i></a>
+            </li>
+            <li class="step" data-title="¿COMO PODEMOS CONTACTARLE?">
+              <a href="#form3_tab3" data-toggle="tab" class="btn btn-white"><i class="fa fa-comments-o"></i></a>
+            </li>
+          </ul><!--.wizard-steps-->
+        </div><!--.steps-centered-->
+      </div><!--.panel-heading-->
+
+      <div class="panel-body">
+        <form id="form3" method="post" action="#" class="">
+          <div class="tab-content">
+            <div class="tab-pane" id="form3_tab1">
+              <div class="row">
+                <div class="col-md-6">
+                  <legend class="text-danger">Detalles de la petición</legend>
+                  <div class="form-group">
+                    <div class="inputer">
+                      <div class="input-wrapper">
+                        <textarea name="basic-textarea" class="form-control" rows="5" placeholder="Describe tu petición."></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <legend class="text-danger">¿Tiene algo para compartir?</legend>
+                  <p>Puede compartirnos documentos con extención .pdf e imagenes con extenciones .jpg y .png que esten relacionados con su petición y/o que describa la misma.</p>
+                  <div class="fileinput fileinput-new input-group centerFileInput" data-provides="fileinput">
+                    <div class="form-control centerFileInput" data-trigger="fileinput" id="prueba">
+                    <div class="input-group-addon centerFileInput">
+                      <i class="glyphicon glyphicon-file fileinput-exists"></i>
+                      <span class="fileinput-filename"></span>
+                    </div>
+                    </div>
+                    <span class="input-group-addon btn-file centerFileInput">
+                      <span class="fileinput-new btn btn-light-green btnMargin">Seleccionar</span>
+                      <span class="fileinput-exists btn btn-deep-purple btnMargin">Cambiar</span>
+                      <input type="file" name="...">
+                    </span>
+                    <a href="#" class="input-group-addon centerFileInput" style="padding: 0;"><span class=" fileinput-exists btn btn-purple btnMargin"  data-dismiss="fileinput">Quitar</span></a>
+                  </div>
+                </div>
+              </div>
+            </div><!--.tab-pane-->
+
+            <div class="tab-pane" id="form3_tab2">
+              <div class="row">
+                  <div id="map"></div>
+                  <input type="text" id="lat" hidden>
+                  <input type="text" id="lng" hidden>
+                  <input type="text" id="number" hidden>
+                  <input type="text" id="route" hidden>
+                  <input type="text" id="sublocality" hidden>
+              </div>
+            </div><!--.tab-pane-->
+
+            <div class="tab-pane" id="form3_tab3">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <div class="inputer">
+                      <div class="input-wrapper">
+                        <input type="text" name="name" class="form-control" placeholder="Nombre" required>
+                      </div>
+                    </div>
+                  </div><!--.form-group-->
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <div class="inputer">
+                      <div class="input-wrapper">
+                        <input type="text" name="paternalSurname" class="form-control" placeholder="Apellido Paterno" required>
+                      </div>
+                    </div>
+                  </div><!--.form-group-->
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <div class="inputer">
+                      <div class="input-wrapper">
+                        <input type="text" name="maternalSurname" class="form-control" placeholder="Apellido Materno" required>
+                      </div>
+                    </div>
+                  </div><!--.form-group-->
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <div class="inputer">
+                      <div class="input-wrapper">
+                        <input type="text" name="email" class="form-control" placeholder="Correo Eléctronico" required>
+                      </div>
+                    </div>
+                  </div><!--.form-group-->
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <div class="inputer">
+                      <div class="input-wrapper">
+                        <input type="text" name="telephone" class="form-control" placeholder="Teléfono" required>
+                      </div>
+                    </div>
+                  </div><!--.form-group-->
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="text-green">¿Desea recibir noticias sobre su solicitud?</label>
+                    <div class="switcher switcher-teal">
+                      <input id="checkbox1" type="checkbox" hidden="hidden">
+                      <label for="checkbox1"></label>
+                      <p class="switch">Si, lo deseo.</p>
+                    </div><!--.switcher-->
+                  </div><!--.form-group-->
+                  <small class="text-danger">Se notificara a traves de su correo eléctronico, teléfono o mensaje de texto la respuesta que se de a  su petición.</small>
+                </div>
+                <div class="col-md-2" id="contactway" hidden>
+                  <label class="text-light-green">Contactarme por:</label>
+                  <div class="form-group">
+                    <div class="checkboxer checkboxer-teal">
+                      <input type="checkbox" value="" id="check1">
+                      <label for="check1">Correo eléctronico</label>
+                    </div><!--.checkbox-->
+                    <div class="checkboxer checkboxer-teal">
+                      <input type="checkbox" value="" id="check2">
+                      <label for="check2">Teléfono</label>
+                    </div><!--.checkbox-->
+                    <div class="checkboxer checkboxer-teal">
+                      <input type="checkbox" value="" id="check3">
+                      <label for="check3">Mensaje de texto</label>
+                    </div><!--.checkbox-->
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="text-green">¿Desea crear una cuenta de usuario?</label>
+                    <div class="switcher switcher-teal">
+                      <input id="checkbox2" type="checkbox" hidden="hidden">
+                      <label for="checkbox2"></label>
+                      <p class="switch">Si, lo deseo.</p>
+                    </div><!--.switcher-->
+                  </div><!--.form-group-->
+                  <small class="text-danger">Crear una cuenta le permitirá seguir el estado de cada solicitud que realice y además gestionar sus preferencias de usuario.</small>
+                </div>
+                <div class="col-md-2" id="password" hidden>
+                  <div class="form-group">
+                    <label class="text-light-green">Contraseña:</label></br>
+                    <small class="text-danger">Tu usuario es tu cuentra de correo eléctronico: </small>
+                    <div class="inputer">
+                      <div class="input-wrapper input-group">
+                        <input type="password" name="password" class="form-control" placeholder="Contraseña" id="password" required>
+                        <span id="showHidePass" action="hide" class="input-group-addon glyphicon glyphicon-eye-open"></span>
+                      </div>
+                    </div>
+                  </div><!--.form-group-->
+                </div>
+              </div>
+            </div><!--.tab-pane-->
+
+          </div><!--.tab-content-->
+        </form>
+      </div><!--.panel-body-->
+            
+      <div class="panel-footer">
+        <ul class="wizard clearfix">
+          <li class="bs-wizard-prev pull-left"><button class="btn btn-amber" id="buttonBack"><i class="fa fa-arrow-circle-left"></i> Atras</button></li>
+          <li class="bs-wizard-next pull-right"><button id="buttonChange" class="btn btn-indigo">Seguir <i class="fa fa-arrow-circle-right"></i></button></li>
+          <li class="bs-wizard-submit pull-right"><button type="submit" class="btn btn-light-green">Terminar <i class="fa fa-check-circle"></i></button></li>
+        </ul>
+      </div><!--.panel-footer-->
+
+    </div><!--.panel-->
+    
+    <!-- Modal -->
+    <div class="modal fade" id="defaultModal" role="dialog">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title text-light-green">Determinar su ubicación</h4>
+          </div>
+          <div class="modal-body">
+            <p>Si se encuentra cerca del problema le recomendamos permitir la geolocalización de su navegador, de lo contrario tendrá que localizar de manera manual el lugar del problema.</p>
+          </div>
+          <div class="modal-footer" style="text-align: center;">
+            <button type="button" class="btn btn btn-purple btn-ripple" data-dismiss="modal">Entendido</button>
+          </div>
+        </div><!--.modal-content-->
+      </div><!--.modal-dialog-->
+    </div><!--.modal-->
+    
+  </div>
+
+  <!-- BEGIN GLOBAL AND THEME VENDORS -->
+  <script src="../assets/globals/js/global-vendors.js"></script>
+  <!-- END GLOBAL AND THEME VENDORS -->
+
+  <!-- BEGIN PLUGINS AREA -->
+  <script src="../assets/globals/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
+  <script src="../assets/globals/plugins/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+  <script src="../assets/globals/plugins/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
+  <!-- END PLUGINS AREA -->
+
+  <!-- PLUGINS INITIALIZATION AND SETTINGS -->
+  <script src="../assets/globals/scripts/forms-wizard.js"></script>
+  <!-- END PLUGINS INITIALIZATION AND SETTINGS -->
+
+  <!-- PLEASURE -->
+  <script src="../assets/globals/js/pleasure.js"></script>
+  <!-- ADMIN 1 -->
+  <script src="../assets/admin1/js/layout.js"></script>
+  
+  <script>
+    $(document).ready(function () {
+
+      var countClicks = 1;
+
+      $('#buttonChange').on('click',function(){
+        if(countClicks==1){
+          //If 1st clik open modal just once and initialize the map
+          $('#defaultModal').modal('show');
+          initialize();
+          $('#agree').focus();
+          countClicks++;
+        }else{
+          //if 2nd click geocoder address, this to avoid the Query Limit problem
+          geocodeLatLng();
+        }
+      });
+
+      var isMobile = {
+        Android: function() {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function() {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function() {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function() {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function() {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function() {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+        }
+      };
+
+      $('#checkbox1').click(function(){
+        $('#contactway').toggle();
+      });
+      $('#checkbox2').click(function(){
+        $('#password').toggle();
+      });
+
+      movePanelHeading();
+      widthName();
+
+      $('.optionnav').hover(function(){
+          $(this).css('font-size','15px');
+        }, function(){
+          $(this).css('font-size','14px');
+      });
+
+      $('#buttonChange, #buttonBack').click(function(){
+        movePanelHeading(); 
+      });
+
+      $(window).resize(function() {
+        movePanelHeading();
+        widthName();
+      });
+
+      if( isMobile.any() ) {
+        $('#showHidePass').click(function(){
+          if($(this).attr('action')=='hide'){
+            $(this).parent().find('#password').attr('type','text');
+            $(this).removeClass('glyphicon-eye-open').addClass('glyphicon-eye-close').attr('action','show');
+          }else if($(this).attr('action')=='show'){
+            $(this).parent().find('#password').attr('type','password');
+            $(this).removeClass('glyphicon-eye-close').addClass('glyphicon-eye-open').attr('action','hide');
+          }
+        });
+      }else{
+        $('#showHidePass').mousedown(function(){
+          $(this).parent().find('#password').attr('type','text');
+          $(this).removeClass('glyphicon-eye-open').addClass('glyphicon-eye-close');
+        });
+        $('#showHidePass').mouseup(function(){
+          $(this).parent().find('#password').attr('type','password');
+          $(this).removeClass('glyphicon-eye-close').addClass('glyphicon-eye-open');
+        });
+      }
+
+      $('input:password').keyup(function(){
+        $campo = $(this).val();
+        if($campo == ''){
+          $('#showHidePass').css('opacity','0');
+        }else{
+          $('#showHidePass').css({'opacity':'1','cursor':'pointer'});
+        }
+      });
+
+      function movePanelHeading(){
+        setTimeout(function() {
+          if($('.panel-heading').height()>58){
+            $('#mover').css('margin-top',$('.panel-heading').height()-58);
+          }else{
+            $('#mover').css('margin-top',0);
+          }
+        }, 10);
+      }
+
+      function widthName(){
+        setTimeout(function() {
+          $('.fileinput-filename').css('width',$('#prueba').width()-60);
+        }, 100);
+      }
+    });
+  </script>
+  
+  <!-- BEGIN INITIALIZATION-->
+  <script>
+  $(document).ready(function () {
+    Pleasure.init();
+    Layout.init();
+    FormsWizard.init();
+  });
+  </script>
+  <!-- END INITIALIZATION-->
+</body>
+</html>

@@ -1,0 +1,115 @@
+@font-face {
+    font-family: varelaround;
+    src: url('../../assets/open/fonts/varelaround/VarelaRound-Regular.ttf');
+}
+
+body{
+  text-align: center;
+  background: #009587;
+  font-family: varelaround;
+  background-image:url('../../assets/open/img/background.png');
+  margin-left: 0px !important;
+}
+
+img {
+  display:flex;
+  margin:0 auto;
+}
+
+.topic{
+  position: absolute;
+  bottom: 0px;
+  color: #ffffff;
+  text-align: center;
+  width: 100%;
+}
+
+.col-centered {
+  display:inline-block;
+  float:none;
+  margin-right:-4px;
+  border-radius: 100%;
+  overflow: hidden;
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 922px) { 
+  .col-centered {
+    width: 20%;
+  }
+  .myNavbar{
+    padding: 15px; height:100%;
+  }
+}
+
+a:link{   
+  text-decoration:none;   
+}   
+
+.nopadding{
+  padding: 0px;
+  border: double 5px rgba(255,255,255,0);
+  background-clip: padding-box;
+}
+
+.shadow{
+  text-shadow: .050em .050em  .050em #000000;
+}
+
+h2{
+  color: #ffffff;
+  padding-top: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  width: 70%!important;
+  margin:auto;
+  margin-bottom: 15px; 
+}
+      
+small,div.checkboxer{
+  text-align: left;
+}
+      
+h3{
+  margin-top: 5px;
+}
+      
+.marginRight{
+  margin-right: 10px;
+}
+
+.info {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.5);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#50000000,endColorstr=#50000000);
+  color: #fff;
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  /* alineacion vertical */
+  align-items: center;
+   /* alineacion horizontal */
+  justify-content: center;
+  webkit­shape­inside: rectangle(0,0,100%,100%,50px,50px);
+}
+
+div.info h4{
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.navbarfirst{
+  border-radius:0px !important;
+  margin-bottom: 0px !important;
+}
+
+.navbar{
+  border-width: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.optionnav{
+  color: white!important;
+}
